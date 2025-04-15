@@ -2,20 +2,42 @@
 
 <table border="5" align="center">
     <tr>
-        <th>AÑO</th>
-        <th>PROYECTOS</th>
+        <th>LENGUAJE</th>
+        <th>CARPETAS</th>
     </tr>
     <tr>
-        <td rowspan=4>📂 · 2024-2025</td>
-        <td>📎 · <a href="https://github.com/Mikilix2006/JAVA/tree/main/2024-2025/Proyecto1">BlackKJack</a></td>
+        <td rowspan=2>📂 · SQL</td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/SQL/CONSULTAS-Y-VISTAS">CONSULTAS</a></td>
     </tr>
     <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/JAVA/tree/main/2024-2025/ClasesConObjetos">ClasesConObjetos</a></td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/SQL/MODIFICACION-DE-DATOS">DML</a></td>
     </tr>
     <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/JAVA/tree/main/2024-2025/Dibujitos">Dibujitos</a></td>
+        <td rowspan=9>📂 · PL/SQL</td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/PLSQL/BLOQUES-ANONIMOS">BLOQUES ANÓNIMOS</a></td>
     </tr>
     <tr>
-        <td>📎 · <a href="https://github.com/Mikilix2006/JAVA/tree/main/2024-2025/tartaglia">Tartaglia</a></td>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/PLSQL/CURSORES">CURSORES</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/PLSQL/EXCEPCIONES">EXCEPCIONES</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/PLSQL/FUNCIONES-Y-PROCEDIMIENTOS">FUNCIONES Y PROCEDIMIENTOS</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/PLSQL/PAQUETES">PAQUETES</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/PLSQL/REGISTROS">REGISTROS</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/PLSQL/SECUENCIAS">SECUENCIAS</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/PLSQL/TRIGGERS">TRIGGERS</a></td>
+    </tr>
+    <tr>
+        <td>📎 · <a href="https://github.com/Mikilix2006/SQL-PLSQL/PLSQL/VARRAYS">VARRAYS</a></td>
     </tr>
 </table>
