@@ -252,7 +252,31 @@ ROLLBACK;
 /* Ejercicio 8: Escribir un procedimiento que reciba todos los datos
 de un nuevo empleado procese la transacción de alta, gestionando posibles errores. */
 
-CREATE OR REPLACE PROCEDURE 
+/*
+CREATE OR REPLACE PROCEDURE NUEVO_EMP(
+NUM_EMP EMP.EMPNO%TYPE,
+NOMBRE EMP.ENAME%TYPE,
+TRABAJO EMP.JOB%TYPE,
+JEFE EMP.MGR%TYPE,
+FECHA EMP.HIREDATE%TYPE,
+SALARIO EMP.SAL%TYPE,
+COMISION EMP.COMM%TYPE,
+NUM_DEPT EMP.DEPTNO%TYPE
+) IS
+    EXCEP_VAR_VACIA EXCEPTION;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE(NUM_EMP);
+EXCEPTION
+    WHEN EXCEP_VAR_VACIA THEN
+        DBMS_OUTPUT.PUT_LINE('UNO DE LOS PARAMETROS ESTÁ VACÍO');
+END;
+/
+
+BEGIN
+    NUEVO_EMP(8013,'NUEVO','BAR',7369,SYSDATE,5000,NULL,30,NULL);
+END;
+/
+*/
 
 /* Ejercicio 9: Codificar un procedimiento reciba como parámetros
 un numero de departamento, un importe y un porcentaje; y suba el 
