@@ -376,7 +376,53 @@ salario a todos los empleados del departamento indicado en la llamada.
 La subida será el porcentaje o el importe indicado en la llamada 
 (el que sea más beneficioso para el empleado en cada caso). */
 
+CREATE OR REPLACE PROCEDURE SUBIR_SAL(
+NUM_DEPT EMP2.DEPTNO%TYPE,
+IMPORTE NUMBER,
+PORCENTAJE NUMBER
+) IS
+    CURSOR CUR_SALARIOS IS
+        SELECT E.EMPNO AS EMPNO, E.SAL AS SAL
+        FROM EMP2 E
+        WHERE E.DEPTNO = NUM_DEPT;
+    V_SALARIOS CUR_SALARIOS%ROWTYPE;
+    
+    SAL_PORCENT NUMBER DEFAULT 0;
+    SAL_IMPORTE NUMBER DEFAULT 0;
+    NUEVO_SAL NUMBER DEFAULT 0;
+BEGIN
+    OPEN CUR_SALARIOS;
+    FETCH CUR_SALARIOS INTO V_SALARIOS;
+    WHILE (CUR_SALARIOS%FOUND) LOOP
+        SAL_PORCENT := ROUND(V_SALARIOS.SAL+V_SALARIOS.SAL*PORCENTAJE/100,4);
+        SAL_IMPORTE := V_SALARIOS.SAL+IMPORTE;
+        DBMS_OUTPUT.PUT_LINE('EMPNO:' || V_SALARIOS.EMPNO);
+        DBMS_OUTPUT.PUT_LINE('ORIGINAL:' || V_SALARIOS.SAL);
+        DBMS_OUTPUT.PUT_LINE('SAL CON PORCENTAJE:' || SAL_PORCENT);
+        DBMS_OUTPUT.PUT_LINE('SAL CON IMPORTE:' || SAL_IMPORTE);
+        DBMS_OUTPUT.PUT_LINE('==================================');
+        IF SAL_PORCENT >= SAL_IMPORTE THEN
+            NUEVO_SAL := SAL_PORCENT;
+        ELSE
+            NUEVO_SAL := SAL_IMPORTE;
+        END IF;
+        
+        UPDATE EMP2
+        SET SAL = NUEVO_SAL
+        WHERE EMPNO = V_SALARIOS.EMPNO;
+        
+        FETCH CUR_SALARIOS INTO V_SALARIOS;
+    END LOOP;
+    CLOSE CUR_SALARIOS;
+END;
+/
 
+BEGIN
+    SUBIR_SAL(20,300,20);
+END;
+/
+
+ROLLBACK;
 
 /* Ejercicio 10: Escribir un procedimiento que suba el sueldo de todos 
 los empleados que ganen menos que el salario medio de su oficio. La subida
