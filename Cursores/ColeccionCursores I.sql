@@ -430,6 +430,62 @@ será de el 50% de la diferencia entre el salario del empleado y la media
 de su oficio. Se deberá asegurar que la transacción no se quede a medias,
 y se gestionarán los posibles errores. */
 
+CREATE OR REPLACE PROCEDURE SUBIR_SUELDO 
+IS
+    CURSOR CUR_EMP IS
+        SELECT EMPNO, SAL, JOB
+        FROM EMP2
+        ORDER BY JOB;
+    V_EMP CUR_EMP%ROWTYPE;
+    
+    CURSOR CUR_SAL_JOB IS
+        SELECT JOB, ROUND(AVG(SAL)) AS SAL
+        FROM EMP2
+        GROUP BY JOB
+        ORDER BY JOB;
+    V_SAL_JOB CUR_SAL_JOB%ROWTYPE;
+    
+    SUBIDA_SAL NUMBER DEFAULT 0;
+BEGIN    
+    OPEN CUR_EMP;
+    OPEN CUR_SAL_JOB;
+    
+    FETCH CUR_EMP INTO V_EMP;
+    FETCH CUR_SAL_JOB INTO V_SAL_JOB;
+    
+    WHILE CUR_EMP%FOUND AND CUR_SAL_JOB%FOUND LOOP
+        IF V_EMP.JOB NOT LIKE V_SAL_JOB.JOB THEN
+            FETCH CUR_SAL_JOB INTO V_SAL_JOB;
+        END IF;
+        
+        IF V_EMP.SAL < V_SAL_JOB.SAL THEN
+            SUBIDA_SAL := (V_SAL_JOB.SAL - V_EMP.SAL) * 0.5;
+            DBMS_OUTPUT.PUT_LINE('EMPLEADO: '||V_EMP.EMPNO||'OBTIENE SUBIDA DE SALARIO, ENHORABUENA!');
+            DBMS_OUTPUT.PUT_LINE('SAL MEDIO DE SU OFICIO: '||V_SAL_JOB.SAL);
+            DBMS_OUTPUT.PUT_LINE('ANTIGUO SALARIO: '||V_EMP.SAL);
+            DBMS_OUTPUT.PUT_LINE('NUEVO SALARIO: '||(V_EMP.SAL+SUBIDA_SAL));
+            DBMS_OUTPUT.PUT_LINE('==================================');
+        END IF;
+        
+        UPDATE EMP2
+        SET SAL = SAL + SUBIDA_SAL
+        WHERE EMPNO = V_EMP.EMPNO;
+        
+        FETCH CUR_EMP INTO V_EMP;
+    END LOOP;
+    
+    CLOSE CUR_SAL_JOB;
+    CLOSE CUR_EMP;
+END;
+/
+
+BEGIN
+    SUBIR_SUELDO();
+END;
+/
+
+ROLLBACK;
+
 /* Ejercicio 11 *CONSULTAR ENUNCIADO* */
 
 /* Ejercicio 12 *CONSULTAR ENUNCIADO* */
