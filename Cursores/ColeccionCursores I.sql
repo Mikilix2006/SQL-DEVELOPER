@@ -486,7 +486,88 @@ END;
 
 ROLLBACK;
 
-/* Ejercicio 11 *CONSULTAR ENUNCIADO* */
+/* Ejercicio 11: Diseñar una aplicación que simule un listado de liquidación de los empleados según las siguientes especificaciones:
+•	El listado tendrá el siguiente formato para cada empleado:
+**********************************************************************
+Liquidación del empleado:.........(1)	Dpto.:.............(2)	Oficio:................(3)
 
-/* Ejercicio 12 *CONSULTAR ENUNCIADO* */
+Salario			:.............(4)
+Trienios		:.............(5)
+Comp. responsabilidad:.............(6)
+Comisión		:.............(7)
+			---------------
+Total			:..............(8)
+**********************************************************************
+•	Donde:
+?	1 ,2, 3 y 4 corresponden al apellido, departamento, oficio y salario del empleado.
+?	5 es el importe en concepto de trienios. Cada trienio son tres años completos desde la fecha de alta hasta la de emisión y supone 500 €. 
+?	6 es el complemento por responsabilidad. Será de 1000€ por cada empleado que se encuentre directamente a cargo del empleado en cuestión.
+?	7 es la comisión. Los valores nulos serán sustituidos por ceros.
+?	8 suma de todos los conceptos anteriores.
+•	El listado irá ordenado por ename. */
+
+DECLARE
+    CURSOR CUR_EMP IS
+        SELECT EMPNO,ENAME,JOB,MGR,HIREDATE,SAL,COMM,DNAME
+        FROM EMP E
+        LEFT JOIN DEPT D ON D.DEPTNO=E.DEPTNO
+        ORDER BY ENAME;
+    V_EMP CUR_EMP%ROWTYPE;
+    
+    COMP_RESP NUMBER DEFAULT 0;
+    TOT_COMP_RESP NUMBER DEFAULT 0;
+    TRIENIOS NUMBER DEFAULT 0;
+    TOT_TRIEN NUMBER DEFAULT 0;
+    TOTAL NUMBER DEFAULT 0;
+BEGIN
+    OPEN CUR_EMP;
+    FETCH CUR_EMP INTO V_EMP;
+    WHILE CUR_EMP%FOUND LOOP
+        TRIENIOS := TRUNC((MONTHS_BETWEEN(SYSDATE,V_EMP.HIREDATE)/12)/3);
+        TOT_TRIEN := TRIENIOS*500;
+        SELECT COUNT(EMPNO)
+        INTO COMP_RESP
+        FROM EMP
+        WHERE MGR = V_EMP.EMPNO;
+        TOT_COMP_RESP := COMP_RESP*1000;
+        TOTAL := V_EMP.SAL+TOT_TRIEN+TOT_COMP_RESP+NVL(V_EMP.COMM,0);
+        DBMS_OUTPUT.PUT_LINE('Liquidación del empleado:'||V_EMP.ENAME||' Dpto.:'||V_EMP.DNAME||' Oficio:'||V_EMP.JOB);
+        DBMS_OUTPUT.PUT_LINE('');
+        DBMS_OUTPUT.PUT_LINE(RPAD('Salario',15,'.')||': '||V_EMP.SAL||'€');
+        DBMS_OUTPUT.PUT_LINE(RPAD('Trienios',15,'.')||': '||TRIENIOS||' ('||TOT_TRIEN||'€)');
+        DBMS_OUTPUT.PUT_LINE(RPAD('Comp. responsabilidad',15,'.')||': '||COMP_RESP||' ('||TOT_COMP_RESP||'€)');
+        DBMS_OUTPUT.PUT_LINE(RPAD('Comisión',15,'.')||': '||NVL(V_EMP.COMM,0)||'€');
+        DBMS_OUTPUT.PUT_LINE(RPAD('              ',30,'-'));
+        DBMS_OUTPUT.PUT_LINE(RPAD('Total',15,'.')||': '||TOTAL||'€');
+        DBMS_OUTPUT.PUT_LINE(RPAD('*',50,'*'));
+        FETCH CUR_EMP INTO V_EMP;
+    END LOOP;
+    CLOSE CUR_EMP;
+END;
+/
+
+/* Ejercicio 12: Crear la tabla T_liquidacion con las columnas apellido, 
+departamento, oficio, salario, trienios, comp_responsabilidad, comisión y 
+total; y modificar la aplicación anterior para que en lugar de realizar el 
+listado directamente en pantalla, guarde los datos en la tabla. Se controlarán 
+todas las posibles incidencias que puedan ocurrir durante el proceso. */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
