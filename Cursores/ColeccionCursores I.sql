@@ -552,7 +552,7 @@ total; y modificar la aplicación anterior para que en lugar de realizar el
 listado directamente en pantalla, guarde los datos en la tabla. Se controlarán 
 todas las posibles incidencias que puedan ocurrir durante el proceso. */
 
-
+CREATE TABLE T_LIQUIDACION
 
 
 
